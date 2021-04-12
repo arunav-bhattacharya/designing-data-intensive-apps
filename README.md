@@ -20,7 +20,7 @@ This book focusses primarily on 3 aspects -
 - Scalability
 - Maintainability
 
-#### 1.1 Reliability 
+#### Reliability 
 
 Reliability means making systems work correctly, even when faults occur. Faults can be in hardware (typically random and uncorrelated), software (bugs are typically systematic and hard to deal with), and humans (who inevitably make mistakes from time to time). Fault-tolerance techniques can hide certain types of faults from the end user.
 
@@ -29,7 +29,7 @@ Types of faults -
   - Software Errors
   - Human errors
 
-#### 1.2 Scalability
+#### Scalability
 
 Scalability means having strategies for keeping performance good, even when load increases. In order to discuss scalability, we first need ways of describing load and performance quantitatively. We looked at Twitter’s home timelines as an example of describing load, and response time percentiles as a way of measuring performance. In a scalable system, you can add processing capacity in order to remain reliable under high load.
 
@@ -60,20 +60,20 @@ Scalability means having strategies for keeping performance good, even when load
 
 The architecture of systems that operate at large scale is usually highly specific to the application—there is no such thing as a generic, one-size-fits-all scalable architecture (informally known as magic scaling sauce). The problem may be the volume of reads, the volume of writes, the volume of data to store, the complexity of the data, the response time requirements, the access patterns, or (usually) some mixture of all of these plus many more issues.
 
-#### 1.3 Maintainability
+#### Maintainability
 
 Maintainability has many facets, but in essence it’s about making life better for the engineering and operations teams who need to work with the system. Good *abstractions* can help reduce complexity and make the system easier to modify and adapt for new use cases. Good *operability* means having good visibility into the system’s health, and having effective ways of managing it.
 
-#### Operability: Making Life Easy for Operations
+##### Operability: Making Life Easy for Operations
 
 Make it easy for operations teams to keep the system running smoothly. Good operations can often work around the limitations of bad (or incomplete) software, but good software cannot run reliably with bad operations.
 
-#### Simplicity: Managing Complexity
+##### Simplicity: Managing Complexity
 
 Make it easy for new engineers to understand the system, by removing as much complexity as possible from the system. Moseley and Marks define complexity as *accidental* if it is not inherent in the problem that the software solves (as seen by the users) but arises only from the implementation.
 One of the best tools we have for removing *accidental complexity* is abstraction. A good abstraction can hide a great deal of implementation detail behind a clean, simple-to-understand façade.
 
-#### Evolvability: Making Change Easy
+##### Evolvability: Making Change Easy
 
 Make it easy for engineers to make changes to the system in the future, adapting it for unanticipated use cases as requirements change. Also known as extensibility, modifiability, or plasticity. In terms of organizational processes, *Agile* working patterns provide a framework for adapting to change. The Agile community has also developed technical tools and patterns that are helpful when developing software in a frequently changing environment, such as *test-driven development (TDD) and refactoring*.
 
