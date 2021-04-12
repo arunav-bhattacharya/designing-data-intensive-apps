@@ -74,7 +74,7 @@ One of the best tools we have for removing *accidental complexity* is abstractio
 
 #### Evolvability: Making Change Easy
 
-Make it easy for engineers to make changes to the system in the future, adapting it for unanticipated use cases as requirements change. Also known as extensibility, modifiability, or plasticity. In terms of organizational processes, *Agile* working patterns provide a framework for adapting to change. The Agile community has also developed technical tools and pat‐ terns that are helpful when developing software in a frequently changing environ‐ ment, such as *test-driven development (TDD) and refactoring*.
+Make it easy for engineers to make changes to the system in the future, adapting it for unanticipated use cases as requirements change. Also known as extensibility, modifiability, or plasticity. In terms of organizational processes, *Agile* working patterns provide a framework for adapting to change. The Agile community has also developed technical tools and pat‐ terns that are helpful when developing software in a frequently changing environment, such as *test-driven development (TDD) and refactoring*.
 
 ### 2. Data Models and Query Languages
 
