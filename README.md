@@ -118,7 +118,8 @@ Most applications are built by layering one data model on top of another. For ea
   "industry_id": 131,
   "photo_url": "/p/7/000/253/05b/308dd6e.jpg",
   "positions": [
-    {"job_title": "Co-chair", "organization": "Bill & Melinda Gates Foundation"}, {"job_title": "Co-founder, Chairman", "organization": "Microsoft"}
+    {"job_title": "Co-chair", "organization": "Bill & Melinda Gates Foundation"}, 
+    {"job_title": "Co-founder, Chairman", "organization": "Microsoft"}
   ], 
   "education": [
     {"school_name": "Harvard University", "start": 1973, "end": 1975},
