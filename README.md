@@ -99,14 +99,39 @@ Most applications are built by layering one data model on top of another. For ea
 - Most application development today is done in object-oriented programming languages, which leads to a common criticism of the SQL data model: if data is stored in relational tables, an awkward translation layer is required between the objects in the application code and the database model of tables, rows, and columns. The disconnect between the models is sometimes called an impedance mismatch.
 - Object-relational mapping (ORM) frameworks like ActiveRecord and Hibernate reduce the amount of boilerplate code required for this translation layer, but they can’t completely hide the differences between the two models.
 
-![linkedin-profile](/images/linkedin-profile.png “linkedin-profile”)
-
 #### One-to-Many Relationship
 
-There is a one-to-many relationship from the user to these items, which can be repre‐ sented in various ways:
-- In the traditional SQL model (prior to SQL:1999), the most common normalized representation is to put positions, education, and contact information in separate tables, with a foreign key reference to the users table, as in Figure 2-1.
-- Later versions of the SQL standard added support for structured datatypes and XML data; this allowed multi-valued data to be stored within a single row, with support for querying and indexing inside those documents. These features are supported to varying degrees by Oracle, IBM DB2, MS SQL Server, and Post‐ greSQL [6, 7]. A JSON datatype is also supported by several databases, including IBM DB2, MySQL, and PostgreSQL [8].
-- A third option is to encode jobs, education, and contact info as a JSON or XML document, store it on a text column in the database, and let the application inter‐ pret its structure and content. In this setup, you typically cannot use the database to query for values inside that encoded column.
+- Consider the below image. In the traditional SQL model, the most common normalized representation is to put `positions`, `education`, and `contact_info` in separate tables, with a foreign key reference to the `users` table
+- Later versions of the SQL standard added support for structured datatypes and XML data; this allowed multi-valued data to be stored within a single row, with support for querying and indexing inside those documents. These features are supported to varying degrees by Oracle, IBM DB2, MS SQL Server, and PostgreSQL. A JSON datatype is also supported by several databases, including IBM DB2, MySQL, and PostgreSQL.
+- A third option is to encode jobs, education, and contact info as a JSON or XML document, store it on a text column in the database, and let the application interpret its structure and content. In this setup, you typically cannot use the database to query for values inside that encoded column.
+
+![linkedin profile](/images/linkedin.png "linkedin-profile")
+
+- For a data structure like a résumé, which is mostly a self-contained document, a JSON representation can be quite appropriate. JSON has the appeal of being much simpler than XML. Document-oriented databases like MongoDB, RethinkDB, CouchDB, Espresso, etc support this data model.
+
+```json
+{
+  "user_id": 251,
+  "first_name": "Bill",
+  "last_name": "Gates",
+  "summary": "Co-chair of the Bill & Melinda Gates... Active blogger.", "region_id": "us:91",
+  "industry_id": 131,
+  "photo_url": "/p/7/000/253/05b/308dd6e.jpg",
+  "positions": [
+    {"job_title": "Co-chair", "organization": "Bill & Melinda Gates Foundation"}, {"job_title": "Co-founder, Chairman", "organization": "Microsoft"}
+  ], 
+  "education": [
+    {"school_name": "Harvard University", "start": 1973, "end": 1975},
+    {"school_name": "Lakeside School, Seattle", "start": null, "end": null} 
+  ],
+  "contact_info": {
+  "blog": "http://thegatesnotes.com", "twitter": "http://twitter.com/BillGates"
+  } 
+}
+```
+
+- The JSON representation has better locality than the multi-table schema. If you want to fetch a profile in the relational example, you need to either perform multiple queries (query each table by `user_id`) or perform a messy multiway join between the users table and its subordinate tables. In the JSON representation, all the relevant information is in one place, and one query is sufficient.
+- The one-to-many relationships from the user profile to the user’s `positions`, `education` history, and `contact_info` imply a tree structure in the data, and the JSON representation makes this tree structure explicit.
 
 ### 3. Storage and Retrieval
 
