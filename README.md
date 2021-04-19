@@ -47,7 +47,7 @@ Scalability means having strategies for keeping performance good, even when load
     > - *Latency* and *response time* are often used synonymously, but they are not the same.
     > - The *response time* is what the client sees: besides the actual time to process the request (the service time), it includes network delays and queueing delays.
     > - *Latency* is the duration that a request is waiting to be handled — during which it is latent, awaiting service 
-    > 
+
     > **Measuring Response Times**
     > - *Mean* is not a very good metric if you want to know your “typical” response time, because it doesn’t tell you how many users actually experienced that delay.
     > - It is better to use *percentiles*. If you take your list of response times and sort it from fastest to slowest, then the median is the halfway point: for example, if your median response time is 200 ms, that means half your requests return in less than 200 ms, and half your requests take longer than that.
@@ -64,18 +64,17 @@ The architecture of systems that operate at large scale is usually highly specif
 
 Maintainability has many facets, but in essence it’s about making life better for the engineering and operations teams who need to work with the system. Good *abstractions* can help reduce complexity and make the system easier to modify and adapt for new use cases. Good *operability* means having good visibility into the system’s health, and having effective ways of managing it.
 
-##### Operability: Making Life Easy for Operations
+- **Operability: Making Life Easy for Operations**
+  Make it easy for operations teams to keep the system running smoothly. Good operations can often work around the limitations of bad (or incomplete) software, but good software cannot run reliably with bad operations.
 
-Make it easy for operations teams to keep the system running smoothly. Good operations can often work around the limitations of bad (or incomplete) software, but good software cannot run reliably with bad operations.
+- **Simplicity: Managing Complexity**
+  Make it easy for new engineers to understand the system, by removing as much complexity as possible from the system. Moseley and Marks define complexity as *accidental* if it is not inherent in the problem that the software solves (as seen by the users) but arises only from the implementation.
+  One of the best tools we have for removing *accidental complexity* is **abstraction**. A good abstraction can hide a great deal of implementation detail behind a clean, simple-to-understand façade.
 
-##### Simplicity: Managing Complexity
+- **Evolvability: Making Change Easy**
+  Make it easy for engineers to make changes to the system in the future, adapting it for unanticipated use cases as requirements change. Also known as extensibility, modifiability, or plasticity. In terms of organizational processes, *Agile* working patterns provide a framework for adapting to change. The Agile community has also developed technical tools and patterns that are helpful when developing software in a frequently changing environment, such as *test-driven development (TDD) and refactoring*.
 
-Make it easy for new engineers to understand the system, by removing as much complexity as possible from the system. Moseley and Marks define complexity as *accidental* if it is not inherent in the problem that the software solves (as seen by the users) but arises only from the implementation.
-One of the best tools we have for removing *accidental complexity* is abstraction. A good abstraction can hide a great deal of implementation detail behind a clean, simple-to-understand façade.
-
-##### Evolvability: Making Change Easy
-
-Make it easy for engineers to make changes to the system in the future, adapting it for unanticipated use cases as requirements change. Also known as extensibility, modifiability, or plasticity. In terms of organizational processes, *Agile* working patterns provide a framework for adapting to change. The Agile community has also developed technical tools and patterns that are helpful when developing software in a frequently changing environment, such as *test-driven development (TDD) and refactoring*.
+<br>
 
 ### 2. Data Models and Query Languages
 
@@ -99,15 +98,16 @@ Most applications are built by layering one data model on top of another. For ea
 - Most application development today is done in object-oriented programming languages, which leads to a common criticism of the SQL data model: if data is stored in relational tables, an awkward translation layer is required between the objects in the application code and the database model of tables, rows, and columns. The disconnect between the models is sometimes called an impedance mismatch.
 - Object-relational mapping (ORM) frameworks like ActiveRecord and Hibernate reduce the amount of boilerplate code required for this translation layer, but they can’t completely hide the differences between the two models.
 
-#### One-to-Many Relationship
+##### One-to-Many Relationship
 
 - Consider the below image. In the traditional SQL model, the most common normalized representation is to put `positions`, `education`, and `contact_info` in separate tables, with a foreign key reference to the `users` table
-- Later versions of the SQL standard added support for structured datatypes and XML data; this allowed multi-valued data to be stored within a single row, with support for querying and indexing inside those documents. These features are supported to varying degrees by Oracle, IBM DB2, MS SQL Server, and PostgreSQL. A JSON datatype is also supported by several databases, including IBM DB2, MySQL, and PostgreSQL.
+- Later versions of the SQL standard added support for structured datatypes and XML data; this allowed multi-valued data to be stored within a single row, with support for querying and indexing inside those documents. These features are supported to varying degrees by Oracle, IBM DB2, MS SQL Server, and PostgreSQL.
 - A third option is to encode jobs, education, and contact info as a JSON or XML document, store it on a text column in the database, and let the application interpret its structure and content. In this setup, you typically cannot use the database to query for values inside that encoded column.
 
 ![linkedin profile](/images/linkedin.png "linkedin-profile")
 
 - For a data structure like a résumé, which is mostly a self-contained document, a JSON representation can be quite appropriate. JSON has the appeal of being much simpler than XML. Document-oriented databases like MongoDB, RethinkDB, CouchDB, Espresso, etc support this data model.
+- The JSON representation has better *locality* than the multi-table schema. If you want to fetch a profile in the relational example, you need to either perform multiple queries (query each table by `user_id`) or perform a messy multiway join between the users table and its subordinate tables. In the JSON representation, all the relevant information is in one place, and one query is sufficient.
 
 ```json
 {
@@ -147,8 +147,85 @@ Most applications are built by layering one data model on top of another. For ea
 }
 ```
 
-- The JSON representation has better locality than the multi-table schema. If you want to fetch a profile in the relational example, you need to either perform multiple queries (query each table by `user_id`) or perform a messy multiway join between the users table and its subordinate tables. In the JSON representation, all the relevant information is in one place, and one query is sufficient.
 - The one-to-many relationships from the user profile to the user’s `positions`, `education` history, and `contact_info` imply a tree structure in the data, and the JSON representation makes this tree structure explicit.
+
+##### Many-to-One and Many-to-Many Relationships
+
+In the preceding section, `region_id` and `industry_id` are given as IDs, not as plain-text strings "Greater Seattle Area" and "Philanthropy". Why? If the user interface has free-text fields for entering the region and the industry, it makes sense to store them as plain-text strings. But there are advantages to having standardized lists of geographic regions and industries, and letting users choose from a drop-down list or autocompleter:
+- Consistent style and spelling across profiles
+- Avoiding ambiguity (e.g., if there are several cities with the same name)
+- Ease of updating—the name is stored in only one place, so it is easy to update across the board if it ever needs to be changed
+- Localization support—when the site is translated into other languages, the stand‐ ardized lists can be localized, so the region and industry can be displayed in the viewer’s language
+- Better search
+
+The advantage of using an ID is that because it has no meaning to humans, it never needs to change: the ID can remain the same, even if the information it identifies changes. Removing such duplication is the key idea behind normalization in databases.
+
+Unfortunately, normalizing this data requires many-to-one relationships, which don’t fit nicely into the document model. In relational databases, it’s normal to refer to rows in other tables by ID, because joins are easy. In document databases, joins are not needed for one-to-many tree structures, and support for joins is often weak. If the database itself does not support joins, you have to emulate a join in application code by making multiple queries to the database.
+
+Moreover, even if the initial version of an application fits well in a join-free docu‐ ment model, data has a tendency of becoming more interconnected as features are added to applications.
+
+#### Are Document Databases Repeating History ?
+
+##### Network Model
+
+##### Relational Model
+
+
+#### Relational Versus Document Databases Today
+
+##### Which data model leads to simpler application code?
+
+##### Schema flexibility in the document model
+
+##### Data locality for queries
+
+##### Convergence of document and relational databases
+
+
+#### Query Languages for Data
+
+- When the relational model was introduced, it included a new way of querying data: **SQL** is a *declarative* query language, whereas IMS and CODASYL queried the database using *imperative* code.
+- In a declarative query language, like SQL or relational algebra, you just specify the pattern of the data you want—what conditions the results must meet, and how you want the data to be transformed (e.g., sorted, grouped, and aggregated)—but not how to achieve that goal. It is up to the database system’s **query optimizer** to decide which indexes and which join methods to use, and in which order to execute various parts of the query.
+- *Imperative code is very hard to parallelize* across multiple cores and multiple machines, because it specifies instructions that must be per‐ formed in a particular order. *Declarative languages have a better chance of getting faster in parallel execution* because they specify only the pattern of the results, not the algorithm that is used to determine the results. The database is free to use a parallel implementation of the query language, if appropriate 
+
+##### Declarative Queries on the Web
+
+- In a web browser, using declarative CSS styling is much better than manipulating styles imperatively in JavaScript.
+
+##### MapReduce Querying
+
+- MapReduce is *neither a declarative query language nor a fully imperative query API*, but somewhere in between: the logic of the query is expressed with snippets of code, which are called repeatedly by the processing framework. It is based on the **map** (also known as collect) and **reduce** (also known as fold or inject) functions that exist in many *functional programming* languages.
+- The map and reduce functions are somewhat restricted in what they are allowed to do. They must be **pure functions**, which means they only use the data that is passed to them as input, they cannot perform additional database queries, and they must not have any side effects. These restrictions allow the database to run the functions any‐ where, in any order, and rerun them on failure.
+
+#### Graph Data Models
+
+- A graph consists of two kinds of objects: **vertices** (also known as nodes or entities) and **edges** (also known as relationships or arcs).
+- Graphs are not limited to such homogeneous data: an equally powerful use of graphs is to provide a consis‐ tent way of storing completely different types of objects in a single datastore.
+- There are several different, but related, ways of structuring and querying data in graphs. In this section we will discuss the **property graph model** (implemented by Neo4j, Titan, and InfiniteGraph) and the **triple-store model** (implemented by Datomic, AllegroGraph, and others). 
+- We will also look at three declarative query languages for graphs: *Cypher*, *SPARQL*, and *Datalog*. Besides these, there are also imperative graph query languages such as *Gremlin* and graph processing frameworks like *Pregel*.
+
+##### Property Graphs
+
+##### Cypher Query Language
+
+##### Graph Queries in SQL
+
+##### Triple Store and SPARQL
+
+> Graph vs Network Model
+
+##### Datalog
+
+#### Summary
+
+Historically, data started out being represented as one big tree (the hierarchical model), but that wasn’t good for representing many-to-many relationships, so the relational model was invented to solve that problem. More recently, developers found that some applications don’t fit well in the relational model either. New nonrelational “NoSQL” datastores have diverged in two main directions:
+1. Document databases target use cases where data comes in self-contained docu‐ ments and relationships between one document and another are rare.
+2. Graph databases go in the opposite direction, targeting use cases where anything is potentially related to everything.
+
+One thing that document and graph databases have in common is that they typically don’t enforce a schema for the data they store, which can make it easier to adapt applications to changing requirements. 
+
+
+<br>
 
 ### 3. Storage and Retrieval
 
