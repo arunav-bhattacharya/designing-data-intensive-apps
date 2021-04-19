@@ -114,19 +114,35 @@ Most applications are built by layering one data model on top of another. For ea
   "user_id": 251,
   "first_name": "Bill",
   "last_name": "Gates",
-  "summary": "Co-chair of the Bill & Melinda Gates... Active blogger.", "region_id": "us:91",
+  "summary": "Co-chair of the Bill & Melinda Gates... Active blogger.", 
+  "region_id": "us:91",
   "industry_id": 131,
   "photo_url": "/p/7/000/253/05b/308dd6e.jpg",
   "positions": [
-    {"job_title": "Co-chair", "organization": "Bill & Melinda Gates Foundation"}, 
-    {"job_title": "Co-founder, Chairman", "organization": "Microsoft"}
+    {
+      "job_title": "Co-chair", 
+      "organization": "Bill & Melinda Gates Foundation"
+    }, 
+    {
+      "job_title": "Co-founder, Chairman", 
+      "organization": "Microsoft"
+    }
   ], 
   "education": [
-    {"school_name": "Harvard University", "start": 1973, "end": 1975},
-    {"school_name": "Lakeside School, Seattle", "start": null, "end": null} 
+    {
+      "school_name": "Harvard University", 
+      "start": 1973, 
+      "end": 1975
+    },
+    {
+      "school_name": "Lakeside School, Seattle", 
+      "start": null, 
+      "end": null
+    } 
   ],
   "contact_info": {
-  "blog": "http://thegatesnotes.com", "twitter": "http://twitter.com/BillGates"
+    "blog": "http://thegatesnotes.com", 
+    "twitter": "http://twitter.com/BillGates"
   } 
 }
 ```
