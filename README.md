@@ -333,7 +333,17 @@ db_get () {
 
 #### 4.1 Formats for Encoding Data
 
+#### Language Specific Formats
+#### JSON, XML and Binary Variants
+#### Thrift and Protocol Buffers
+#### Avro
+#### Merits of Schema
+
 #### 4.2 Modes of Data Flow
+
+#### Dataflow through Databases
+#### Dataflow through Services: REST and RPC
+#### Message-Passing Dataflow
 
 <br>
 
