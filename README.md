@@ -20,7 +20,7 @@ This book focusses primarily on 3 aspects -
 - Scalability
 - Maintainability
 
-#### Reliability 
+#### 1.1 Reliability 
 
 Reliability means making systems work correctly, even when faults occur. Faults can be in hardware (typically random and uncorrelated), software (bugs are typically systematic and hard to deal with), and humans (who inevitably make mistakes from time to time). Fault-tolerance techniques can hide certain types of faults from the end user.
 
@@ -29,7 +29,7 @@ Types of faults -
   - Software Errors
   - Human errors
 
-#### Scalability
+#### 1.2 Scalability
 
 Scalability means having strategies for keeping performance good, even when load increases. In order to discuss scalability, we first need ways of describing load and performance quantitatively. We looked at Twitter’s home timelines as an example of describing load, and response time percentiles as a way of measuring performance. In a scalable system, you can add processing capacity in order to remain reliable under high load.
 
@@ -53,6 +53,7 @@ Scalability means having strategies for keeping performance good, even when load
     > - It is better to use *percentiles*. If you take your list of response times and sort it from fastest to slowest, then the median is the halfway point: for example, if your median response time is 200 ms, that means half your requests return in less than 200 ms, and half your requests take longer than that.
 
 - ##### Coping with Load
+
   - People often talk of a dichotomy between ***scaling up*** (vertical scaling, moving to a more powerful machine) and ***scaling out*** (horizontal scaling, distributing the load across multiple smaller machines). In reality, good architectures usually involve a pragmatic mixture of approaches: for example, using several fairly powerful machines can still be simpler and cheaper than a large number of small virtual machines.
   - Some systems are ***elastic***, meaning that they can automatically add computing resources when they detect a load increase, whereas other systems are scaled manually (a human analyzes the capacity and decides to add more machines to the system). An elastic system can be useful if load is highly unpredictable, but manually scaled systems are simpler and may have fewer operational surprises.
   - Common wisdom until recently was to keep your database on a single node (scale up) until scaling cost or high-availability requirements forced us to make it distributed. As the tools and abstractions for distributed systems get better, this common wisdom may change, at least for some kinds of applications. It is conceivable that ***distributed data systems*** will become the default in the future, even for use cases that don’t handle large volumes of data or traffic.
@@ -60,7 +61,7 @@ Scalability means having strategies for keeping performance good, even when load
 
 The architecture of systems that operate at large scale is usually highly specific to the application—there is no such thing as a generic, one-size-fits-all scalable architecture (informally known as magic scaling sauce). The problem may be the volume of reads, the volume of writes, the volume of data to store, the complexity of the data, the response time requirements, the access patterns, or (usually) some mixture of all of these plus many more issues.
 
-#### Maintainability
+#### 1.3 Maintainability
 
 Maintainability has many facets, but in essence it’s about making life better for the engineering and operations teams who need to work with the system. Good *abstractions* can help reduce complexity and make the system easier to modify and adapt for new use cases. Good *operability* means having good visibility into the system’s health, and having effective ways of managing it.
 
@@ -84,7 +85,7 @@ Most applications are built by layering one data model on top of another. For ea
 3. The engineers who built your database software decided on a way of representing that JSON/XML/relational/graph data in terms of bytes in memory, on disk, or on a network. The representation may allow the data to be queried, searched, manipulated, and processed in various ways.
 4. On yet lower levels, hardware engineers have figured out how to represent bytes in terms of electrical currents, pulses of light, magnetic fields, and more.
 
-#### Relational vs Document Model
+#### 2.1 Relational vs Document Model
 
 - The roots of relational databases lie in *business data processing*, which was performed on mainframe computers in the 1960s and ’70s. The use cases appear mundane from today’s perspective: typically *transaction processing* (entering sales or banking transactions, airline reservations, stock-keeping in warehouses) and *batch processing* (customer invoicing, payroll, reporting).
 - In the 2010s, **NoSQL** is the latest attempt to overthrow the relational model’s dominance. It has been retroactively reinterpreted as ***Not Only SQL***. There are several driving forces behind the adoption of NoSQL databases:
@@ -183,39 +184,39 @@ Most applications are built by layering one data model on top of another. For ea
 - ##### Convergence of document and relational databases
 
 
-#### Query Languages for Data
+#### 2.2 Query Languages for Data
 
 - When the relational model was introduced, it included a new way of querying data: **SQL** is a *declarative* query language, whereas IMS and CODASYL queried the database using *imperative* code.
 - In a declarative query language, like SQL or relational algebra, you just specify the pattern of the data you want—what conditions the results must meet, and how you want the data to be transformed (e.g., sorted, grouped, and aggregated)—but not how to achieve that goal. It is up to the database system’s **query optimizer** to decide which indexes and which join methods to use, and in which order to execute various parts of the query.
 - *Imperative code is very hard to parallelize* across multiple cores and multiple machines, because it specifies instructions that must be performed in a particular order. *Declarative languages have a better chance of getting faster in parallel execution* because they specify only the pattern of the results, not the algorithm that is used to determine the results. The database is free to use a parallel implementation of the query language, if appropriate 
 
-- ##### Declarative Queries on the Web
+#### Declarative Queries on the Web
 
   - In a web browser, using declarative CSS styling is much better than manipulating styles imperatively in JavaScript.
 
-- ##### MapReduce Querying
+#### MapReduce Querying
 
   - MapReduce is *neither a declarative query language nor a fully imperative query API*, but somewhere in between: the logic of the query is expressed with snippets of code, which are called repeatedly by the processing framework. It is based on the **map** (also known as collect) and **reduce** (also known as fold or inject) functions that exist in many *functional programming* languages.
   - The map and reduce functions are somewhat restricted in what they are allowed to do. They must be **pure functions**, which means they only use the data that is passed to them as input, they cannot perform additional database queries, and they must not have any side effects. These restrictions allow the database to run the functions anywhere, in any order, and rerun them on failure.
 
-#### Graph Data Models
+#### 2.3 Graph Data Models
 
 - A graph consists of two kinds of objects: **vertices** (also known as nodes or entities) and **edges** (also known as relationships or arcs).
 - Graphs are not limited to homogeneous data: an equally powerful use of graphs is to provide a consistent way of storing completely different types of objects in a single datastore.
 - There are several different, but related, ways of structuring and querying data in graphs. In this section we will discuss the **property graph model** (implemented by Neo4j, Titan, and InfiniteGraph) and the **triple-store model** (implemented by Datomic, AllegroGraph, and others). 
 - We will also look at three declarative query languages for graphs: *Cypher*, *SPARQL*, and *Datalog*. Besides these, there are also imperative graph query languages such as *Gremlin* and graph processing frameworks like *Pregel*.
 
-- ##### Property Graphs
+#### Property Graphs
 
-- ##### Cypher Query Language
+#### Cypher Query Language
 
-- ##### Graph Queries in SQL
+#### Graph Queries in SQL
 
-- ##### Triple Store and SPARQL
+#### Triple Store and SPARQL
 
   > Graph vs Network Model
 
-- ##### Datalog
+- #### Datalog
 
 #### Summary
 
@@ -326,8 +327,13 @@ db_get () {
 
 #### Summary
 
+<br>
 
 ### 4. Encoding and Evolution
+
+#### 4.1 Formats for Encoding Data
+
+#### 4.2 Modes of Data Flow
 
 <br>
 
