@@ -1,12 +1,28 @@
 # Designing Data Intensive Applications
 
-This document is essentially a summary of the book - "Designing Data Intensive Applications" by Martin Kleppmann. As I was reading through the book I jotted the important relevant points from the book in this document.
+This document is essentially a summary of the book - "Designing Data Intensive Applications" by Martin Kleppmann. As I was reading through the book I jotted the important relevant points from the book in this document. Chapters from the book -
+- **I. [Foundation of Data Systems](#part-i---foundation-of-data-systems)**
+  - [Reliable, Scalable and Maintainable Applications](#1-reliable-scalable-and-maintainable-applications-19) 19
+  - [Data Models and Query Languages](#2-data-models-and-query-languages) 36
+  - [Storage and Retrieval](#3-storage-and-retrieval) 34
+  - [Encoding and Evolution](#4-encoding-and-evolution) 28
+- **II. [Distributed Data](#part-ii---distributed-data)**
+  - [Replication](#5-replication) 41
+  - [Partitioning](#6-partitioning) 17
+  - [Transactions](#7-transactions) 45
+  - [Trouble with Distributed Systems](#8-trouble-with-distributed-systems) 37
+  - [Consistency and Consensus](#9-consistency-and-consensus) 52
+- **III. [Derived Data](#part-iii---derived-data)**
+  - [Batch Processing](#10-batch-processing) 40
+  - [Stream Processing](#11-stream-processing) 40
+  - [Future of Data Systems](#12-future-of-data-systems) 54
 
 <br>
 
+[Top](#designing-data-intensive-applications)
 ## Part I - Foundation of Data Systems
 
-### Reliable, Scalable and Maintainable Applications
+### 1. Reliable, Scalable and Maintainable Applications (19)
 
 A data-intensive application is typically built from standard building blocks that provide commonly needed functionality. For example, many applications need to:
 - Store data so that they, or another application, can find it again later (*databases*)
@@ -76,6 +92,8 @@ Maintainability has many facets, but in essence it’s about making life better 
   Make it easy for engineers to make changes to the system in the future, adapting it for unanticipated use cases as requirements change. Also known as extensibility, modifiability, or plasticity. In terms of organizational processes, *Agile* working patterns provide a framework for adapting to change. The Agile community has also developed technical tools and patterns that are helpful when developing software in a frequently changing environment, such as *test-driven development (TDD) and refactoring*.
 
 <br>
+
+[Top](#designing-data-intensive-applications)
 
 ### 2. Data Models and Query Languages
 
@@ -229,6 +247,8 @@ Most applications are built by layering one data model on top of another. For ea
 
 <br>
 
+[Top](#designing-data-intensive-applications)
+
 ### 3. Storage and Retrieval
 
 #### 3.1 Data Structures That Power Your Database
@@ -329,6 +349,8 @@ db_get () {
 
 <br>
 
+[Top](#designing-data-intensive-applications)
+
 ### 4. Encoding and Evolution
 
 #### 4.1 Formats for Encoding Data
@@ -349,13 +371,31 @@ db_get () {
 
 ## Part II - Distributed Data
 
+[Top](#designing-data-intensive-applications)
+
 ### 5. Replication
+
+<br>
+
+[Top](#designing-data-intensive-applications)
 
 ### 6. Partitioning
 
+<br>
+
+[Top](#designing-data-intensive-applications)
+
 ### 7. Transactions
 
+<br>
+
+[Top](#designing-data-intensive-applications)
+
 ### 8. Trouble with Distributed Systems
+
+<br>
+
+[Top](#designing-data-intensive-applications)
 
 ### 9. Consistency and Consensus
 
@@ -363,8 +403,18 @@ db_get () {
 
 ## Part III - Derived Data
 
+[Top](#designing-data-intensive-applications)
+
 ### 10. Batch Processing
 
+<br>
+
+[Top](#designing-data-intensive-applications)
+
 ### 11. Stream Processing
+
+<br>
+
+[Top](#designing-data-intensive-applications)
 
 ### 12. Future of Data Systems
