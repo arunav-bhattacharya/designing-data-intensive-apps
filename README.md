@@ -22,7 +22,7 @@ This document is essentially a summary of the book - "Designing Data Intensive A
 [Top](#designing-data-intensive-applications)
 ## Part I - Foundation of Data Systems
 
-### 1. Reliable, Scalable and Maintainable Applications (19)
+### 1. Reliable, Scalable and Maintainable Applications
 
 A data-intensive application is typically built from standard building blocks that provide commonly needed functionality. For example, many applications need to:
 - Store data so that they, or another application, can find it again later (*databases*)
