@@ -1,18 +1,18 @@
 # Designing Data Intensive Applications
 
 This document is essentially a summary of the book - "Designing Data Intensive Applications" by Martin Kleppmann. As I was reading through the book I jotted the important relevant points from the book in this document. Chapters from the book -
-- **I. [Foundation of Data Systems](#part-i---foundation-of-data-systems)**
+- **I. [Foundation of Data Systems](#part-i---foundation-of-data-systems)**   117
   - [Reliable, Scalable and Maintainable Applications](#1-reliable-scalable-and-maintainable-applications-19) 19
   - [Data Models and Query Languages](#2-data-models-and-query-languages) 36
   - [Storage and Retrieval](#3-storage-and-retrieval) 34
   - [Encoding and Evolution](#4-encoding-and-evolution) 28
-- **II. [Distributed Data](#part-ii---distributed-data)**
+- **II. [Distributed Data](#part-ii---distributed-data)** 192
   - [Replication](#5-replication) 41
   - [Partitioning](#6-partitioning) 17
   - [Transactions](#7-transactions) 45
   - [Trouble with Distributed Systems](#8-trouble-with-distributed-systems) 37
   - [Consistency and Consensus](#9-consistency-and-consensus) 52
-- **III. [Derived Data](#part-iii---derived-data)**
+- **III. [Derived Data](#part-iii---derived-data)** 134
   - [Batch Processing](#10-batch-processing) 40
   - [Stream Processing](#11-stream-processing) 40
   - [Future of Data Systems](#12-future-of-data-systems) 54
