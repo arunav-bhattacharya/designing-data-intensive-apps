@@ -1,7 +1,7 @@
 # Designing Data Intensive Applications
 
 This document is essentially a summary of the book - "**Designing Data Intensive Applications**" by ***Martin Kleppmann***. As I was reading through the book I extracted the important points from the book in this document. Below are the chapters from the book -
-- **I. [Foundation of Data Systems](#part-i---foundation-of-data-systems)**   .117
+- **I. [Foundation of Data Systems](#part-i---foundation-of-data-systems)**   117
   - [1. Reliable, Scalable and Maintainable Applications](#1-reliable-scalable-and-maintainable-applications-19) 19
   - [2. Data Models and Query Languages](#2-data-models-and-query-languages) 36
   - [3. Storage and Retrieval](#3-storage-and-retrieval) 34
